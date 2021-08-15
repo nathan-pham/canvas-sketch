@@ -1,6 +1,32 @@
 import * as THREE from "https://esm.sh/three"
 
 import {insertStyle} from "./style.js"
+import * as utils from "./utils.js"
+
+const createRenderer = ({shadows=false, width, height}={}) => {
+    const renderer = new THREE.WebGLRenderer({antialias: true, alpha: true})
+
+    if(shadows) {
+        renderer.shadowMap.enabled = true
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    }
+
+    renderer.setSize(width, height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+    return renderer
+    // this.container.appendChild(this.renderer.domElement)
+}
+
+const createScene = () => (
+    new THREE.Scene()
+)
+
+const createCamera = ({width, height}) => {
+    const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000)
+    camera.position.z = 3
+    return camera
+}
 
 const create3DSketch = (sketch, OPTIONS) => {
     const {dimensions, container, three, name} = OPTIONS
@@ -8,14 +34,38 @@ const create3DSketch = (sketch, OPTIONS) => {
 
     // select container & append canvas
     const _container = typeof container == "string" ? document.querySelector(container) : container
-    const scene = new THREE.Scene()
 
+    const scene = createScene()
+    const camera = createCamera({width, height})
+    const renderer = createRenderer({width, height})
 
+    const canvas = renderer.domElement
+    _container.appendChild(canvas)
 
-    Object.assign(canvas, {width, height, id: name, tabIndex: 0})
+    Object.assign(canvas, {id: name, tabIndex: 0})
     insertStyle({container: _container, canvas})
 
-    return {}
+    const props = {scene, camera, renderer, ...OPTIONS}
+    const animate = sketch({
+        add: (...objects) => {
+            for(const object of objects) {
+                // TODO: add to objects array?
+                scene.add(object(props))
+            }
+        }
+    })
+    const renderFrame = () => {
+        animate(props)
+        window.requestAnimationFrame(renderFrame)
+    }
+    renderFrame()
+
+    // add ctrl + s canvas shortcut
+    utils.shortcuts(canvas)
+
+    return {
+        download: () => utils.download(canvas)
+    }
 }
 
 export default create3DSketch

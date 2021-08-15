@@ -17,27 +17,19 @@ const create2DSketch = (sketch, OPTIONS) => {
     insertStyle({container: _container, canvas})
 
     // create & start renderer
-    const renderer = sketch()
+    const props = {ctx, canvas, ...OPTIONS}
+    const animate = sketch()
     const renderFrame = () => {
-        renderer({ctx, canvas, ...OPTIONS})
+        animate(props)
         window.requestAnimationFrame(renderFrame)
     }
     renderFrame()
 
-    // download canvas image
-    const download = () => utils.download(canvas)
-
     // add ctrl + s canvas shortcut
-    canvas.focus()
-    canvas.addEventListener("keydown", e => {
-        if(e.ctrlKey && e.key.toLowerCase() == "s") {
-            e.preventDefault()
-            download()
-        }
-    })
+    utils.shortcuts(canvas)
 
     return {
-        download,
+        download: () => utils.download(canvas),
         renderer
     }
 }

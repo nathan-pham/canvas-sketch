@@ -10,15 +10,13 @@ const settings = {
 }
 
 const sketch = createSketch(() => {
-    const objects = []
+    // const objects = []
 
-    objects.push(background({color: "#fff"}))
-    objects.push(grid())
+    // objects.push(background({color: "#fff"}))
+    // objects.push(grid())
 
-    // render loop
+    // // render loop
     return (props) => {
-        for(const renderer of objects) {
-            renderer(props)
-        }
+
     }
 }, settings)
