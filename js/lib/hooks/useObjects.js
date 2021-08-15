@@ -7,7 +7,6 @@ const useObjects = (scene) => {
         if(scene) {
             scene.add(object())
         }
-        console.log(objects)
     }
 
     return [

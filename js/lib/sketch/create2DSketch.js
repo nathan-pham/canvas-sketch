@@ -29,8 +29,7 @@ const create2DSketch = (sketch, OPTIONS) => {
     utils.shortcuts(canvas)
 
     return {
-        download: () => utils.download(canvas),
-        renderer
+        download: () => utils.download(canvas)
     }
 }
 

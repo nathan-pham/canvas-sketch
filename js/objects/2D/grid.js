@@ -1,10 +1,9 @@
 import SimplexNoise from "https://esm.sh/simplex-noise"
 
-import {pick, shuffle, gaussian} from "../lib/random.js"
-import {palettes} from "../lib/palettes.js"
-import {lerp} from "../lib/math.js"
+import {pick, shuffle, gaussian} from "/js/lib/random.js"
+import {palettes} from "/js/lib/palettes.js"
+import {lerp} from "/js/lib/math.js"
 
-import {circle} from "./circle.js"
 import {text} from "./text.js"
 
 const simplex = new SimplexNoise()
