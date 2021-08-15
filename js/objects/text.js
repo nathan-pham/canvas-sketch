@@ -1,4 +1,4 @@
-export const text = ({letter="=", color="#000", size=100, x, y}) => {
+export const text = ({letter="=", color="#000", rotation=0, size=100, x, y}) => {
     return ({ctx}) => {
         ctx.save()
 
@@ -6,7 +6,7 @@ export const text = ({letter="=", color="#000", size=100, x, y}) => {
         ctx.font = `${size}px Helvetica`
         
         ctx.translate(x, y)
-        ctx.rotate(0.25)
+        ctx.rotate(rotation)
         ctx.fillText(letter, 0, 0)
     
         ctx.restore()

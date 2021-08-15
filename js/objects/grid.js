@@ -37,18 +37,19 @@ export const grid = () => {
         .map(([u, v]) => ({
             color: pick(palette),
             size: Math.abs(simplex.noise2D(u, v)),
+            rotation: simplex.noise2D(u, v),
             position: [u, v]
         }))
 
 
     return ({ctx, dimensions: [width, height]}) => {
         for(const point of points) {
-            const {position: [u, v], color, size} = point
+            const {position: [u, v], rotation, color, size} = point
 
             const x = lerp(margin, width - margin, u)
             const y = lerp(margin, height - margin, v)
 
-            const renderText = text({x, y, color, size: size * width * 0.1})
+            const renderText = text({x, y, rotation, color, size: size * width * 0.1})
             renderText({ctx})
         }
     }
