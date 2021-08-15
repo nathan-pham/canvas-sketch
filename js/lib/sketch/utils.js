@@ -1,4 +1,6 @@
-export const download = (canvas) => {
+export const download = (canvas, renderFrame) => {
+    renderFrame()
+
     const image = canvas.toDataURL("image/png") 
 
     const anchor = document.createElement("a")
@@ -9,12 +11,12 @@ export const download = (canvas) => {
     anchor.remove()
 }
 
-export const shortcuts = (canvas) => {
+export const shortcuts = (canvas, renderFrame=()=>{}) => {
     canvas.focus()
     canvas.addEventListener("keydown", e => {
         if(e.ctrlKey && e.key.toLowerCase() == "s") {
             e.preventDefault()
-            download(canvas)
+            download(canvas, renderFrame)
         }
     })
 }

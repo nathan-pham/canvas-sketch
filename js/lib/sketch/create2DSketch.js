@@ -27,10 +27,6 @@ const create2DSketch = (sketch, OPTIONS) => {
 
     // add ctrl + s canvas shortcut
     utils.shortcuts(canvas)
-
-    return {
-        download: () => utils.download(canvas)
-    }
 }
 
 export default create2DSketch

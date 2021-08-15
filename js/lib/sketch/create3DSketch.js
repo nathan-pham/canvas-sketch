@@ -54,11 +54,7 @@ const create3DSketch = (sketch, OPTIONS) => {
     renderFrame()
 
     // add ctrl + s canvas shortcut
-    utils.shortcuts(canvas)
-
-    return {
-        download: () => utils.download(canvas)
-    }
+    utils.shortcuts(canvas, renderFrame)
 }
 
 export default create3DSketch
