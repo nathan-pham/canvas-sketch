@@ -4,8 +4,9 @@ import {background} from "./objects/background.js"
 import {grid} from "./objects/grid.js"
 
 const settings = {
+    container: "#canvas__container",
     dimensions: [2048, 2048], 
-    container: "#canvas__container"
+    three: true
 }
 
 const sketch = createSketch(() => {
