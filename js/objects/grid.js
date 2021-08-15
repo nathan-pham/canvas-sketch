@@ -25,22 +25,19 @@ export const grid = () => {
     const size = 50
 
     // create uv grid
-    const points = create(size)
-
-    let time = 0
+    const points = create(size).map(([u, v]) => ({
+        radius: simplex.noise2D(u, v),
+        position: [u, v]
+    }))
 
     return ({ctx, dimensions: [width, height]}) => {
-        time += 0.005
-
-        const _points = points.filter(([u, v]) => simplex.noise2D(u + time, v + time) > 0.25)
-
-        for(const point of _points) {
-            const [u, v] = point
+        for(const point of points) {
+            const {position: [u, v], radius} = point
 
             const x = lerp(margin, width - margin, u)
             const y = lerp(margin, height - margin, v)
             
-            const renderCircle = circle({x, y, radius: 10})
+            const renderCircle = circle({x, y, radius: Math.abs(radius) * width * 0.01})
             renderCircle({ctx})
         }
     }
