@@ -1,7 +1,7 @@
 import createSketch from "./lib/createSketch.js"
 
-import {background} from "./objects/background.js"
-import {grid} from "./objects/grid.js"
+import useObjects from "./lib/hooks/useObjects.js"
+import {cube} from "./objects/3D/cube.js"
 
 const settings = {
     container: "#canvas__container",
@@ -9,14 +9,16 @@ const settings = {
     three: true
 }
 
-const sketch = createSketch(() => {
-    // const objects = []
+const sketch = createSketch(({scene}) => {
+    const [objects, pushObject] = useObjects(scene)
 
-    // objects.push(background({color: "#fff"}))
-    // objects.push(grid())
+    pushObject(cube())
 
-    // // render loop
-    return (props) => {
+    return ({renderer, scene, camera}) => {
+        for(const renderObject of objects) {
+            renderObject()
+        }
 
+        renderer.render(scene, camera)
     }
 }, settings)

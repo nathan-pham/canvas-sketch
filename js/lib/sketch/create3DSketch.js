@@ -45,15 +45,8 @@ const create3DSketch = (sketch, OPTIONS) => {
     Object.assign(canvas, {id: name, tabIndex: 0})
     insertStyle({container: _container, canvas})
 
-    const props = {scene, camera, renderer, ...OPTIONS}
-    const animate = sketch({
-        add: (...objects) => {
-            for(const object of objects) {
-                // TODO: add to objects array?
-                scene.add(object(props))
-            }
-        }
-    })
+    const props = {scene, camera, renderer, ...OPTIONS}    
+    const animate = sketch(props)
     const renderFrame = () => {
         animate(props)
         window.requestAnimationFrame(renderFrame)

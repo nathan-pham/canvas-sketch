@@ -18,7 +18,7 @@ const create2DSketch = (sketch, OPTIONS) => {
 
     // create & start renderer
     const props = {ctx, canvas, ...OPTIONS}
-    const animate = sketch()
+    const animate = sketch(props)
     const renderFrame = () => {
         animate(props)
         window.requestAnimationFrame(renderFrame)
