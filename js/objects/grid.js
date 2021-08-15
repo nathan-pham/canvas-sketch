@@ -25,12 +25,10 @@ const create = (size) => {
 
 
 export const grid = () => {
-    const margin = 200
+    const margin = 0
     const size = 30
 
     const palette = shuffle(pick(palettes)) //.slice(0, 3)
-
-    console.log(simplex.noise2D(0, 1))
 
     // create uv grid
     const points = create(size)
@@ -45,16 +43,6 @@ export const grid = () => {
 
 
     return ({ctx, dimensions: [width, height]}) => {
-
-        // const animatedGrid = points.map((props) => {
-        //     const {position: [u, v]} = props
-
-        //     return {
-        //         ...props,
-        //         size: simplex.noise2D(u + timer, v + timer),
-        //         rotation: simplex.noise2D(u + timer, v + timer),
-        //     }
-        // })
 
         for(const point of points) {
             const {position: [u, v], rotation, color, size} = point
