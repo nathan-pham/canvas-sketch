@@ -1,18 +1,5 @@
 const EPSILON = Number.EPSILON
 
-export const gaussian = (sample=6) => {
-    let random = 0
-
-    for(let i = 0; i < sample; i++) {
-        random += Math.random()
-    }
-    return random / sample
-}
-
-export const pick = (array) => (
-    array[Math.floor(Math.random() * array.length)]
-)
-
 export const clamp = (value, min, max) => (
     Math.min(Math.max(value, min), max)
 )
