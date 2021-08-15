@@ -5,9 +5,6 @@ import {lerp} from "../lib/math.js"
 
 const simplex = new SimplexNoise()
 
-// simplex = new SimplexNoise(Math.random),
-// value2d = simplex.noise2D(x, y);
-
 const create = (size) => {
     const points = []
 
