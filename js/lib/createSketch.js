@@ -21,7 +21,6 @@ const insertStyle = ({container, canvas}) => {
     })
 
     const aspect = canvas.width / canvas.height
-    console.log(aspect)
 
     Object.assign(canvas.style, {
         outline: "none",

@@ -1,5 +1,12 @@
+import SimplexNoise from "https://esm.sh/simplex-noise"
+
 import {circle} from "./circle.js"
 import {lerp} from "../lib/math.js"
+
+const simplex = new SimplexNoise()
+
+// simplex = new SimplexNoise(Math.random),
+// value2d = simplex.noise2D(x, y);
 
 const create = (size) => {
     const points = []
@@ -21,10 +28,16 @@ export const grid = () => {
     const size = 50
 
     // create uv grid
-    const points = create(size).filter(() => Math.random() > 0.5)
+    const points = create(size)
+
+    let time = 0
 
     return ({ctx, dimensions: [width, height]}) => {
-        for(const point of points) {
+        time += 0.005
+
+        const _points = points.filter(([u, v]) => simplex.noise2D(u + time, v + time) > 0.25)
+
+        for(const point of _points) {
             const [u, v] = point
 
             const x = lerp(margin, width - margin, u)
