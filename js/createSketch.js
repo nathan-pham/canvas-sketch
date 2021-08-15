@@ -1,5 +1,32 @@
-import {DEFAULT_OPTIONS} from "./constants.js"
-import insertStyle from "./insertStyle.js"
+// default sketch configuration
+const DEFAULT_OPTIONS = {
+    dimensions: [250, 250],
+    container: document.body,
+    name: "canvas-sketch",
+}
+
+// apply basic styles to center canvas
+const insertStyle = ({container, canvas}) => {
+    Object.assign(document.body.style, {
+        padding: "0",
+        margin: "0"
+    })
+
+    Object.assign(container.style, {
+        width: "100vw", 
+        height: "100vh", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center"
+    })
+
+    Object.assign(canvas.style, {
+        borderRadius: "0.75rem",
+        width: canvas.width + "px",
+        height: canvas.height + "px",
+        boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.25)"
+    })
+}
 
 // create new sketch
 const createSketch = (sketch, options) => {
