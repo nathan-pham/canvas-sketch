@@ -16,8 +16,8 @@ const sketch = createSketch(() => {
 
     // render loop
     return (props) => {
-        for(const renderObject of objects) {
-            renderObject(props)
+        for(const renderer of objects) {
+            renderer(props)
         }
     }
 }, settings)
