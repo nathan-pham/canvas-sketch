@@ -4,6 +4,7 @@ import {pick, shuffle, gaussian} from "../lib/random.js"
 import {palettes} from "../lib/palettes.js"
 import {lerp} from "../lib/math.js"
 
+import {circle} from "./circle.js"
 import {text} from "./text.js"
 
 const simplex = new SimplexNoise()
@@ -33,24 +34,37 @@ export const grid = () => {
 
     // create uv grid
     const points = create(size)
-        .filter(() => Math.random() > 0.5)
+        // .filter(() => Math.random() > 0.5)
         .map(([u, v]) => ({
             color: pick(palette),
-            size: Math.abs(simplex.noise2D(u, v)),
+            rotation: 0,
+            size: simplex.noise2D(u, v),
             rotation: simplex.noise2D(u, v),
             position: [u, v]
         }))
 
 
     return ({ctx, dimensions: [width, height]}) => {
+
+        // const animatedGrid = points.map((props) => {
+        //     const {position: [u, v]} = props
+
+        //     return {
+        //         ...props,
+        //         size: simplex.noise2D(u + timer, v + timer),
+        //         rotation: simplex.noise2D(u + timer, v + timer),
+        //     }
+        // })
+
         for(const point of points) {
             const {position: [u, v], rotation, color, size} = point
 
             const x = lerp(margin, width - margin, u)
             const y = lerp(margin, height - margin, v)
 
-            const renderText = text({x, y, rotation, color, size: size * width * 0.1})
+            const renderText = text({x, y, letter: "=", rotation, color, size: Math.abs(size * width * 0.2) + 0.5})
             renderText({ctx})
+
         }
     }
 }
