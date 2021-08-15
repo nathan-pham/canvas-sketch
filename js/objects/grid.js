@@ -2,6 +2,7 @@ import {circle} from "./circle.js"
 import {lerp} from "../lib/math.js"
 
 export const grid = () => {
+    const margin = 250
     const points = []
     const size = 5
 
@@ -17,8 +18,11 @@ export const grid = () => {
     return ({ctx, dimensions: [width, height]}) => {
         for(const point of points) {
             const [u, v] = point
+
+            const x = lerp(margin, width - margin, u)
+            const y = lerp(margin, height - margin, v)
             
-            const renderCircle = circle({x: width * u, y: height * v, radius: 50})
+            const renderCircle = circle({x, y, radius: 75})
             renderCircle({ctx})
         }
     }
