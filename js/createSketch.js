@@ -21,6 +21,7 @@ const insertStyle = ({container, canvas}) => {
     })
 
     Object.assign(canvas.style, {
+        outline: "none",
         width: "80vmin",
         height: "80vmin",
         borderRadius: "0.75rem",
@@ -41,7 +42,7 @@ const createSketch = (sketch, options) => {
     _container.appendChild(canvas)
 
     // style container & canvas
-    Object.assign(canvas, {width, height, id: name})
+    Object.assign(canvas, {width, height, id: name, tabIndex: 0})
     insertStyle({container: _container, canvas})
 
     // create renderer
@@ -65,6 +66,19 @@ const createSketch = (sketch, options) => {
 
         anchor.remove()
     }
+
+    // focus on canvas by default
+    canvas.focus()
+
+    // add ctrl + s canvas shortcut
+    canvas.addEventListener("keydown", e => {
+        if(e.ctrlKey) {
+            if(e.key.toLowerCase() == "s") {
+                e.preventDefault()
+                download()
+            }
+        }
+    })
 
     return {
         download,
