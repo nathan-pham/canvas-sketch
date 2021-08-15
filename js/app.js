@@ -5,11 +5,11 @@ import {square} from "./objects/square.js"
 import {circle} from "./objects/circle.js"
 
 const settings = {
-    dimensions: [300, 300], 
+    dimensions: [1000, 1000], 
     container: "#canvas__container"
 }
 
-const sketch = () => {
+const sketch = createSketch(() => {
     const objects = []
 
     objects.push(background({color: "#fff"}))
@@ -21,7 +21,4 @@ const sketch = () => {
             renderObject(props)
         }
     }
-}
-
-
-createSketch(sketch, settings)
+}, settings)

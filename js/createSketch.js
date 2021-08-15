@@ -1,6 +1,6 @@
 // default sketch configuration
 const DEFAULT_OPTIONS = {
-    dimensions: [250, 250],
+    dimensions: [2048, 2048],
     container: document.body,
     name: "canvas-sketch",
 }
@@ -21,9 +21,9 @@ const insertStyle = ({container, canvas}) => {
     })
 
     Object.assign(canvas.style, {
+        width: "80vmin",
+        height: "80vmin",
         borderRadius: "0.75rem",
-        width: canvas.width + "px",
-        height: canvas.height + "px",
         boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.25)"
     })
 }
@@ -53,6 +53,23 @@ const createSketch = (sketch, options) => {
         window.requestAnimationFrame(renderFrame)
     }
     renderFrame()
+
+    // download canvas image
+    const download = () => {
+        const image = canvas.toDataURL("image/png") 
+
+        const anchor = document.createElement("a")
+        anchor.download = `${name}.png`
+        anchor.href = image
+        anchor.click()
+
+        anchor.remove()
+    }
+
+    return {
+        download,
+        renderer
+    }
 }
 
 export default createSketch
