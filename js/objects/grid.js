@@ -13,8 +13,8 @@ const create = (size) => {
 
     for(let x = 0; x < size; x++) {
         for(let y = 0; y < size; y++) {
-            const u = x / (size - 1)
-            const v = y / (size - 1)
+            const u = size <= 1 ? 0.5 : (x / (size - 1))
+            const v = size <= 1 ? 0.5 : (y / (size - 1))
             points.push([u, v])
         }
     }
@@ -29,12 +29,15 @@ export const grid = () => {
 
     const palette = shuffle(pick(palettes)) //.slice(0, 3)
 
+    console.log(simplex.noise2D(0, 1))
+
     // create uv grid
     const points = create(size)
         .filter(() => Math.random() > 0.75)
         .map(([u, v]) => ({
             color: pick(palette),
-            radius: gaussian() * gaussian() * gaussian(),
+            radius: Math.abs(simplex.noise2D(u, v)),
+            // radius: gaussian() * gaussian() * gaussian(),
             position: [u, v]
         }))
 
@@ -49,7 +52,8 @@ export const grid = () => {
             const renderCircle = circle({
                 x, y, 
                 color,
-                radius: clamp((Math.pow(radius, 1.5) * width * 0.35) + 0.5, 0, 100)
+                radius: radius * width * 0.05
+                // radius: clamp((Math.pow(radius, 1.5) * width * 0.35) + 0.5, 0, 100)
             })
             renderCircle({ctx})
         }
