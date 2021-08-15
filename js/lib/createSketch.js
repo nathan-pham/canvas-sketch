@@ -1,7 +1,7 @@
 import create2DSketch from "./sketch/create2DSketch.js"
 import create3DSketch from "./sketch/create3DSketch.js"
 
-import {DEFAULT_OPTIONS} from "./sketch/options.js"
+import { DEFAULT_OPTIONS } from "./sketch/options.js"
 
 // create new sketch
 const createSketch = (sketch, options) => {

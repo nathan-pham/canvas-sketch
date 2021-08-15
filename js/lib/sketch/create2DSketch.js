@@ -1,10 +1,10 @@
-import {insertStyle} from "./style.js"
+import { insertStyle } from "./style.js"
 import * as utils from "./utils.js"
 
 // create 2D sketch
 const create2DSketch = (sketch, OPTIONS) => {
-    const {dimensions, container, three, name} = OPTIONS
-    const [width, height] = dimensions
+    const { dimensions, container, name } = OPTIONS
+    const [ width, height ] = dimensions
 
     // select container & append canvas
     const _container = typeof container == "string" ? document.querySelector(container) : container
@@ -13,11 +13,11 @@ const create2DSketch = (sketch, OPTIONS) => {
     _container.appendChild(canvas)
 
     // style container & canvas
-    Object.assign(canvas, {width, height, id: name, tabIndex: 0})
-    insertStyle({container: _container, canvas})
+    Object.assign(canvas, { width, height, id: name, tabIndex: 0 })
+    insertStyle({ container: _container, canvas })
 
     // create & start renderer
-    const props = {ctx, canvas, ...OPTIONS}
+    const props = { ctx, canvas, ...OPTIONS }
     const animate = sketch(props)
     const renderFrame = () => {
         animate(props)

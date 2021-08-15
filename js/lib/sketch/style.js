@@ -1,4 +1,4 @@
-export const insertStyle = ({container, canvas}) => {
+export const insertStyle = ({ container, canvas }) => {
     Object.assign(document.body.style, {
         padding: "0",
         margin: "0"
