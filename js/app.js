@@ -5,7 +5,7 @@ import {square} from "./objects/square.js"
 import {circle} from "./objects/circle.js"
 
 const settings = {
-    dimensions: [1000, 1000], 
+    dimensions: [2048, 2048], 
     container: "#canvas__container"
 }
 

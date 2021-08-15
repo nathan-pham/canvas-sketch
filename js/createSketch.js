@@ -2,7 +2,7 @@
 const DEFAULT_OPTIONS = {
     dimensions: [2048, 2048],
     container: document.body,
-    name: "canvas-sketch",
+    name: "canvas-sketch"
 }
 
 // apply basic styles to center canvas
@@ -20,11 +20,14 @@ const insertStyle = ({container, canvas}) => {
         justifyContent: "center"
     })
 
+    const aspect = canvas.width / canvas.height
+    console.log(aspect)
+
     Object.assign(canvas.style, {
         outline: "none",
-        width: "80vmin",
-        height: "80vmin",
         borderRadius: "0.75rem",
+        width: `calc(80vmin * ${aspect})`,
+        height: `80vmin`,
         boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.25)"
     })
 }
