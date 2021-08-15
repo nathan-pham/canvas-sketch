@@ -1,4 +1,5 @@
 import {circle} from "./circle.js"
+import {lerp} from "../lib/math.js"
 
 export const grid = () => {
     const points = []

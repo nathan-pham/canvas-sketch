@@ -1,4 +1,4 @@
-import createSketch from "./createSketch.js"
+import createSketch from "./lib/createSketch.js"
 
 import {background} from "./objects/background.js"
 import {grid} from "./objects/grid.js"
