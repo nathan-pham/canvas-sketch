@@ -1,8 +1,7 @@
 import createSketch from "./createSketch.js"
 
 import {background} from "./objects/background.js"
-import {square} from "./objects/square.js"
-import {circle} from "./objects/circle.js"
+import {grid} from "./objects/grid.js"
 
 const settings = {
     dimensions: [2048, 2048], 
@@ -13,7 +12,7 @@ const sketch = createSketch(() => {
     const objects = []
 
     objects.push(background({color: "#fff"}))
-    objects.push(circle())
+    objects.push(grid())
 
     // render loop
     return (props) => {
