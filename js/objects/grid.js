@@ -1,7 +1,8 @@
 import SimplexNoise from "https://esm.sh/simplex-noise"
 
 import {circle} from "./circle.js"
-import {lerp} from "../lib/math.js"
+import {palettes} from "../lib/palettes.js"
+import {lerp, pick, gaussian} from "../lib/math.js"
 
 const simplex = new SimplexNoise()
 
@@ -22,22 +23,32 @@ const create = (size) => {
 
 export const grid = () => {
     const margin = 200
-    const size = 50
+    const size = 30
+
+    const palette = pick(palettes).slice(0, 3)
 
     // create uv grid
-    const points = create(size).map(([u, v]) => ({
-        radius: simplex.noise2D(u, v),
-        position: [u, v]
-    }))
+    const points = create(size)
+        .filter(() => Math.random() > 0.5)
+        .map(([u, v]) => ({
+            color: pick(palette),
+            radius: gaussian() * gaussian() * gaussian(),
+            position: [u, v]
+        }))
+
 
     return ({ctx, dimensions: [width, height]}) => {
         for(const point of points) {
-            const {position: [u, v], radius} = point
+            const {position: [u, v], color, radius} = point
 
             const x = lerp(margin, width - margin, u)
             const y = lerp(margin, height - margin, v)
             
-            const renderCircle = circle({x, y, radius: Math.abs(radius) * width * 0.01})
+            const renderCircle = circle({
+                x, y, 
+                color,
+                radius: (Math.abs(radius) * width * 0.09)
+            })
             renderCircle({ctx})
         }
     }
