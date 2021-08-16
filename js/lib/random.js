@@ -1,3 +1,11 @@
+export const range = (min, max) => (
+    (Math.random() * (max - min)) + min
+)
+
+export const rangeFloor = (min, max) => (
+    Math.floor(range(min, max))
+)
+
 export const gaussian = (sample=6) => {
     let random = 0
 

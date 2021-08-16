@@ -22,9 +22,31 @@ const createScene = () => (
     new THREE.Scene()
 )
 
-const createCamera = ({ width, height }) => {
-    const camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000)
-    camera.position.z = 3
+const createCamera = ({ width, height, isometric }) => {
+    let camera
+    
+    if(isometric) {
+        const aspect = width / height
+        const zoom = 1
+
+        camera = new THREE.OrthographicCamera()
+
+        camera.left = -zoom * aspect
+        camera.right = zoom * aspect
+        camera.top = zoom
+        camera.bottom = -zoom
+
+        camera.near = -100
+        camera.far = 100
+
+        camera.position.set(zoom, zoom, zoom)
+        camera.lookAt(new THREE.Vector3(0, 0, 0))
+    } else {
+        camera = new THREE.PerspectiveCamera(75, width / height, 1, 1000)
+        camera.position.set(4, 2, 2)
+        camera.lookAt(new THREE.Vector3(0, 0, 0))
+    }
+
     return camera
 }
 
@@ -36,9 +58,9 @@ const create3DSketch = (sketch, OPTIONS) => {
     const _container = typeof container == "string" ? document.querySelector(container) : container
 
     const scene = createScene()
-    const camera = createCamera({ width, height })
+    const camera = createCamera({ width, height, isometric: true })
     const renderer = createRenderer({ width, height })
-    renderer.setClearColor(0xffffff, 1)
+    renderer.setClearColor("hsl(0, 0%, 95%)", 1)
 
     const canvas = renderer.domElement
     _container.appendChild(canvas)
@@ -46,9 +68,12 @@ const create3DSketch = (sketch, OPTIONS) => {
     Object.assign(canvas, { id: name, tabIndex: 0 })
     insertStyle({ container: _container, canvas })
 
-    const props = { scene, camera, renderer, ...OPTIONS }    
+    let time = 0
+
+    const props = { time, scene, camera, renderer, ...OPTIONS }    
     const animate = sketch(props)
     const renderFrame = () => {
+        time += 0.01
         animate(props)
         window.requestAnimationFrame(renderFrame)
     }

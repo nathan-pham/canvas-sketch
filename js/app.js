@@ -12,7 +12,9 @@ const settings = {
 createSketch(({ scene }) => {
     const [ objects, pushObject ] = useObjects(scene)
 
-    pushObject(cube())
+    for(let i = 0; i < 10; i++) {
+        pushObject(cube())
+    }
 
     return ({ renderer, scene, camera }) => {
         for(const renderObject of objects) {
