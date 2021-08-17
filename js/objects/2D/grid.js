@@ -1,10 +1,10 @@
 import SimplexNoise from "https://esm.sh/simplex-noise"
 
-import {pick, shuffle} from "/js/lib/random.js"
-import {palettes} from "/js/lib/palettes.js"
-import {lerp} from "/js/lib/math.js"
+import { pick, shuffle } from "/js/lib/random.js"
+import { palettes } from "/js/lib/palettes.js"
+import { lerp } from "/js/lib/math.js"
 
-import {text} from "./text.js"
+import { text } from "./text.js"
 
 const simplex = new SimplexNoise()
 
@@ -25,7 +25,7 @@ const create = (size) => {
 
 export const grid = () => {
     const margin = 0
-    const size = 30
+    const size = 50
 
     const palette = shuffle(pick(palettes)) //.slice(0, 3)
 
@@ -35,8 +35,8 @@ export const grid = () => {
         .map(([u, v]) => ({
             color: pick(palette),
             rotation: 0,
-            size: simplex.noise2D(u, v),
-            rotation: simplex.noise2D(u, v),
+            size: simplex.noise2D(u * 2, v * 2),
+            rotation: simplex.noise2D(u * 2, v * 2),
             position: [u, v]
         }))
 
@@ -49,7 +49,7 @@ export const grid = () => {
             const x = lerp(margin, width - margin, u)
             const y = lerp(margin, height - margin, v)
 
-            const renderText = text({x, y, letter: "=", rotation, color, size: Math.abs(size * width * 0.2) + 0.5})
+            const renderText = text({x, y, letter: "_", rotation, color, size: Math.abs(size * width * 0.2) + 0.5})
             renderText({ctx})
 
         }
