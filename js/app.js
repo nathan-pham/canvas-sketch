@@ -17,7 +17,7 @@ const settings = {
 
 createSketch(({ scene }) => {
     const [ objects, pushObject ] = useObjects(scene)
-    const palette = pick(palettes)
+    const palette = pick(palettes).slice(0, 4)
 
     for(let i = 0; i < 40; i++) {
         pushObject(cube({ palette }))
