@@ -9,7 +9,8 @@ export const cube = () => {
     const mesh = new THREE.Mesh(geometry, material)
 
     mesh.position.set(range(-1, 1), range(-1, 1), range(-1, 1))
-    mesh.scale.multiplyScalar(0.05)
+    mesh.scale.set(range(-1, 1), range(-1, 1), range(-1, 1))
+    mesh.scale.multiplyScalar(0.5)
 
     return () => {
         return mesh

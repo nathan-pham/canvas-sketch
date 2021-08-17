@@ -1,4 +1,4 @@
-export const insertStyle = ({ container, canvas }) => {
+export const insertStyle = ({ container, canvas, fullscreen }) => {
     Object.assign(document.body.style, {
         padding: "0",
         margin: "0"
@@ -14,11 +14,14 @@ export const insertStyle = ({ container, canvas }) => {
 
     const aspect = canvas.width / canvas.height
 
+    const widthHeight = fullscreen 
+        ? ({ width: "100vw", height: "100vh" }) 
+        : ({ width: `calc(80vmin * ${aspect})`, height: "80vmin" })
+
     Object.assign(canvas.style, {
+        ...widthHeight,
         outline: "none",
         borderRadius: "0.75rem",
-        width: `calc(80vmin * ${aspect})`,
-        height: `80vmin`,
         boxShadow: "0 0.5rem 1rem rgba(0, 0, 0, 0.25)"
     })
 }

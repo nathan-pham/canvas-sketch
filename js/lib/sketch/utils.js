@@ -20,3 +20,22 @@ export const shortcuts = (canvas, renderFrame=()=>{}) => {
         }
     })
 }
+
+export const resize = ({ renderer, container, camera, isometric: zoom }) => {
+    window.addEventListener("resize", () => {
+        const { width, height } = container.getBoundingClientRect()
+        const aspect = width / height
+
+        renderer.setSize(width, height)
+        camera.aspect = aspect
+
+        if(zoom) {
+            camera.left = -zoom * aspect
+            camera.right = zoom * aspect
+            camera.top = zoom
+            camera.bottom = -zoom
+        }
+
+        camera.updateProjectionMatrix()
+    })
+}

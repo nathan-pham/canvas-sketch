@@ -5,14 +5,14 @@ import { cube } from "./objects/3D/cube.js"
 
 const settings = {
     container: "#canvas__container",
-    dimensions: [2048, 2048], 
+    dimensions: "fullscreen", 
     three: true
 }
 
 createSketch(({ scene }) => {
     const [ objects, pushObject ] = useObjects(scene)
 
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < 40; i++) {
         pushObject(cube())
     }
 

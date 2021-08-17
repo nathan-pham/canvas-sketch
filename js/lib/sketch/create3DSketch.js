@@ -27,17 +27,16 @@ const createCamera = ({ width, height, isometric }) => {
     
     if(isometric) {
         const aspect = width / height
-        const zoom = 1
+        const zoom = isometric
 
-        camera = new THREE.OrthographicCamera()
-
-        camera.left = -zoom * aspect
-        camera.right = zoom * aspect
-        camera.top = zoom
-        camera.bottom = -zoom
-
-        camera.near = -100
-        camera.far = 100
+        camera = new THREE.OrthographicCamera(
+            -zoom * aspect, // left
+            zoom * aspect, // right
+            zoom, // top
+            -zoom, // bottom
+            -200, // near
+            200 // far
+        )
 
         camera.position.set(zoom, zoom, zoom)
         camera.lookAt(new THREE.Vector3(0, 0, 0))
@@ -52,13 +51,14 @@ const createCamera = ({ width, height, isometric }) => {
 
 const create3DSketch = (sketch, OPTIONS) => {
     const { dimensions, container, name } = OPTIONS
-    const [ width, height ] = dimensions
+    const [ width, height, fullscreen ] = dimensions
+    const isometric = 2
 
     // select container & append canvas
     const _container = typeof container == "string" ? document.querySelector(container) : container
 
     const scene = createScene()
-    const camera = createCamera({ width, height, isometric: true })
+    const camera = createCamera({ width, height, isometric })
     const renderer = createRenderer({ width, height })
     renderer.setClearColor("hsl(0, 0%, 95%)", 1)
 
@@ -66,18 +66,18 @@ const create3DSketch = (sketch, OPTIONS) => {
     _container.appendChild(canvas)
 
     Object.assign(canvas, { id: name, tabIndex: 0 })
-    insertStyle({ container: _container, canvas })
+    insertStyle({ container: _container, canvas, fullscreen })
 
-    let time = 0
-
-    const props = { time, scene, camera, renderer, ...OPTIONS }    
+    const props = { scene, camera, renderer, ...OPTIONS }    
     const animate = sketch(props)
     const renderFrame = () => {
-        time += 0.01
         animate(props)
         window.requestAnimationFrame(renderFrame)
     }
     renderFrame()
+
+    // add resize listener
+    utils.resize({ renderer, camera, container: _container, isometric })
 
     // add ctrl + s canvas shortcut
     utils.shortcuts(canvas, renderFrame)
