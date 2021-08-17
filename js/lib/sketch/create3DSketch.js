@@ -22,12 +22,11 @@ const createScene = () => (
     new THREE.Scene()
 )
 
-const createCamera = ({ width, height, isometric }) => {
+const createCamera = ({ width, height, isometric: zoom }) => {
     let camera
     
-    if(isometric) {
+    if(zoom) {
         const aspect = width / height
-        const zoom = isometric
 
         camera = new THREE.OrthographicCamera(
             -zoom * aspect, // left

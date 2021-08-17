@@ -1,10 +1,10 @@
 import * as THREE from "https://esm.sh/three"
 
-import {range} from "/js/lib/random.js"
+import {range, pick} from "/js/lib/random.js"
 
-export const cube = () => {
+export const cube = ({ palette }) => {
     const geometry = new THREE.BoxGeometry(1, 1, 1)
-    const material = new THREE.MeshBasicMaterial({color: 0x00ff00})
+    const material = new THREE.MeshBasicMaterial({color: pick(palette)})
 
     const mesh = new THREE.Mesh(geometry, material)
 
